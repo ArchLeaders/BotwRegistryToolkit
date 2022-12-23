@@ -19,9 +19,6 @@ namespace BotwRegistryToolkit.Models
         public string DataFolder
             => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? $"{GetFolderPath(SpecialFolder.LocalApplicationData)}/{nameof(BotwRegistryToolkit)}" : $"{GetFolderPath(SpecialFolder.ApplicationData)}/{nameof(BotwRegistryToolkit)}";
 
-        [Setting(UiType.Dropdown, "Dark", "Light", Category = "Appearance")]
-        public string Theme { get; set; } = "Dark";
-
         public void Load()
         {
             if (File.Exists(Path.Combine(DataFolder, "Config.json"))) {
@@ -42,5 +39,23 @@ namespace BotwRegistryToolkit.Models
 
             return this;
         }
+
+        //
+        // Aamp Tools
+
+        [Setting("Convert To Aamp", AampTools_ConvertToAamp, Category = "Aamp Tools", Folder = "Registry Tools")]
+        public bool ConvertYamlToAamp { get; set; } = true;
+
+        [Setting("Convert To Yaml", AampTools_ConvertToAamp, Category = "Aamp Tools", Folder = "Registry Tools")]
+        public bool ConvertAampToYaml { get; set; } = true;
+
+        [Setting("Delete Source", AampTools_DeleteSource, Category = "Aamp Tools", Folder = "Registry Tools")]
+        public bool AampDeleteSource { get; set; } = false;
+
+        // 
+        // App Settings
+
+        [Setting(UiType.Dropdown, "Dark", "Light", Category = "Appearance")]
+        public string Theme { get; set; } = "Dark";
     }
 }
