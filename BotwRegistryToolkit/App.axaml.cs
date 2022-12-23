@@ -15,7 +15,7 @@ namespace BotwRegistryToolkit
     {
         public static AppView View { get; set; }
         public static AppViewModel ViewModel { get; set; }
-        public static FluentTheme Theme { get; set; } = new(new Uri("avares://BotwActorTool/Styles"));
+        public static FluentTheme Theme { get; set; } = new(new Uri("avares://BotwRegistryToolkit/Styles"));
 
         public override void Initialize() => AvaloniaXamlLoader.Load(this);
         public override void OnFrameworkInitializationCompleted()
