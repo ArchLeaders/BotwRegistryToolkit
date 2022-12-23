@@ -15,13 +15,13 @@ namespace BotwRegistryToolkit.Models
 
         public static bool? ConvertYamlToAamp(bool toggle)
         {
-            bool deleteSource = (bool)ViewModel.SettingsView["AampDeleteSource"]!;
+            bool deleteSource = (bool)SettingsFactory["AampDeleteSource"]!;
             return null;
         }
 
         public static bool? ConvertAampToYaml(bool toggle)
         {
-            bool deleteSource = (bool)ViewModel.SettingsView["AampDeleteSource"]!;
+            bool deleteSource = (bool)SettingsFactory["AampDeleteSource"]!;
             return null;
         }
     }

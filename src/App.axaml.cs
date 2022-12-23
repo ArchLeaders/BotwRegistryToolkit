@@ -1,5 +1,7 @@
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
+global using static BotwRegistryToolkit.App;
+
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Generics;
@@ -14,8 +16,7 @@ namespace BotwRegistryToolkit
 {
     public partial class App : Application
     {
-        public static AppView View { get; set; }
-        public static AppViewModel ViewModel { get; set; }
+        public static SettingsView SettingsFactory { get; set; }
         public static FluentTheme Theme { get; set; } = new(new Uri("avares://BotwRegistryToolkit/Styles"));
 
         public override void Initialize() => AvaloniaXamlLoader.Load(this);
@@ -29,12 +30,11 @@ namespace BotwRegistryToolkit
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) {
 
-                // Create default view
-                View = new();
-                ViewModel = new();
-                View.DataContext = ViewModel;
+                // Get SettingsFactory (SettingsView)
+                AppViewModel viewModel = new();
+                SettingsFactory = viewModel.SettingsView;
 
-                GenericWindow mainWindow = WindowBuilder.Initialize(View)
+                GenericWindow mainWindow = WindowBuilder.Initialize(new AppView())
                     .WithWindowColors("SystemChromeLowColor", "SystemChromeHighColor", 0.4)
                     .Build();
 
