@@ -2,6 +2,7 @@
 
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Generics;
 using Avalonia.Generics.Builders;
 using Avalonia.Generics.Controls;
 using Avalonia.Markup.Xaml;
@@ -41,6 +42,7 @@ namespace BotwRegistryToolkit
                 mainWindow.AttachDevTools();
 #endif
                 desktop.MainWindow = mainWindow;
+                ApplicationLoader.Attach(this);
             }
 
             base.OnFrameworkInitializationCompleted();
