@@ -29,7 +29,9 @@ namespace BotwRegistryToolkit.Views
 
         public bool? ValidateBool(string key, bool value)
         {
-            throw new NotImplementedException();
+            return key switch {
+                _ => ValidateRegistryInjector(key, value),
+            };
         }
 
         public bool? ValidateString(string key, string? value)
@@ -42,6 +44,12 @@ namespace BotwRegistryToolkit.Views
                 "Theme" => ValidateTheme(value),
                 _ => null,
             };
+        }
+
+        public static bool? ValidateRegistryInjector(string key, bool value)
+        {
+            Func<bool, bool?> inject = RegistryModel.GetRegistrySet(key);
+            return inject.Invoke(value);
         }
 
         public static bool? ValidateTheme(string value)
