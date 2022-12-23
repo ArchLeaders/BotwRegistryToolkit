@@ -1,15 +1,13 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using ReactiveUI;
-using System;
 
 namespace BotwRegistryToolkit
 {
     public class ViewLocator : IDataTemplate
     {
-        public IControl Build(object data)
+        public IControl Build(object? data)
         {
-            var name = data.GetType().FullName!.Replace("ViewModel", "View");
+            var name = data?.GetType().FullName!.Replace("ViewModel", "View") ?? "";
             var type = Type.GetType(name);
 
             if (type != null) {
@@ -20,7 +18,7 @@ namespace BotwRegistryToolkit
             }
         }
 
-        public bool Match(object data)
+        public bool Match(object? data)
         {
             return data is ReactiveObject;
         }
