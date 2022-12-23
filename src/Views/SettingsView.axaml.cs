@@ -4,6 +4,7 @@ using Avalonia.SettingsFactory;
 using Avalonia.SettingsFactory.Core;
 using Avalonia.SettingsFactory.ViewModels;
 using Avalonia.Themes.Fluent;
+using BotwRegistryToolkit.Models;
 using System.Reflection;
 
 namespace BotwRegistryToolkit.Views
@@ -15,8 +16,20 @@ namespace BotwRegistryToolkit.Views
         {
             InitializeComponent();
 
-            // AfterSaveEvent += () => ShellViewModel.Content = null;
-            // AfterCancelEvent += () => ShellViewModel.Content = null;
+            AfterSaveEvent += async () => {
+                Config.Save();
+                DialogResult results = await MessageBox.ShowDialog("Exit the configuration tool?", "Notice", DialogButtons.YesNoCancel);
+                if (results == DialogResult.Yes) {
+                    Environment.Exit(0);
+                }
+            };
+
+            AfterCancelEvent += async () => {
+                DialogResult results = await MessageBox.ShowDialog("Are you sure you wish to exit without saving?", "Warning", DialogButtons.YesNoCancel);
+                if (results == DialogResult.Yes) {
+                    Environment.Exit(0);
+                }
+            };
 
             SettingsFactoryOptions options = new() {
                 AlertAction = (msg) => MessageBox.ShowDialog(msg),
