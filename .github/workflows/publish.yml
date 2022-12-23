@@ -1,0 +1,103 @@
+name: Deploy
+
+on:
+  push:
+    tags:
+      - "v*"
+
+env:
+  build_windows: "${{ github.workspace }}/build_windows"
+  build_linux: "${{ github.workspace }}/build_linux"
+
+jobs:
+  deploy_botw_save_manager_windows:
+    name: "Deploy BotwRegistryToolkit"
+    runs-on: ubuntu-latest
+
+    env:
+      proj_desktop: "BotwRegistryToolkit"
+      proj_runtime: "BotwRegistryToolkit.Runtime"
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: Install DotNET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "7.0.x"
+
+      - name: "Get Version"
+        id: version
+        uses: battila7/get-version-action@v2
+
+      # Windows
+      - name: Publish BotwRegistryToolkit (Windows)
+        run: dotnet publish src/${{ env.proj_desktop }}.csproj -r win-x64 --configuration Release --version-suffix ${{ steps.version.outputs.version-without-v }} --output ${{ env.build_windows }} --sc false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+
+      # Linux
+      - name: Publish BotwRegistryToolkit (Linux)
+        run: dotnet publish src/${{ env.proj_desktop }}.csproj -r linux-x64 --configuration Release --version-suffix ${{ steps.version.outputs.version-without-v }} --output ${{ env.build_linux }} --sc false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+
+      # Windows (Runtime)
+      - name: Publish BotwRegistryToolkit (Windows)
+        run: dotnet publish runtime/${{ env.proj_runtime }}.csproj -r win-x64 --configuration Release --version-suffix ${{ steps.version.outputs.version-without-v }} --output ${{ env.build_windows }} --sc false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+
+      # Linux (Runtime)
+      - name: Publish BotwRegistryToolkit (Linux)
+        run: dotnet publish runtime/${{ env.proj_runtime }}.csproj -r linux-x64 --configuration Release --version-suffix ${{ steps.version.outputs.version-without-v }} --output ${{ env.build_linux }} --sc false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+
+      # Create Release
+      - name: "Create Release"
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          release_name: BotwRegistryToolkit - ${{ steps.version.outputs.version }}
+          prerelease: ${{ contains(steps.version.outputs.version, 'alpha') || contains(steps.version.outputs.version, 'beta') }}
+
+      # Windows
+      - name: "Upload release asset"
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.build_windows }}/${{ env.proj_desktop }}.exe
+          asset_name: ${{ env.proj_desktop }}-${{ steps.version.outputs.version }}.exe
+          asset_content_type: application/zip
+
+      # Linux
+      - name: "Upload release asset"
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.build_linux }}/${{ env.proj_desktop }}
+          asset_name: ${{ env.proj_desktop }}-${{ steps.version.outputs.version }}
+          asset_content_type: application/zip
+
+      # Windows (Runtime)
+      - name: "Upload release asset"
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.build_windows }}/${{ env.proj_runtime }}.exe
+          asset_name: runtime.exe
+          asset_content_type: application/zip
+
+      # Linux (Runtime)
+      - name: "Upload release asset"
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.build_linux }}/${{ env.proj_runtime }}
+          asset_name: runtime
+          asset_content_type: application/zip
