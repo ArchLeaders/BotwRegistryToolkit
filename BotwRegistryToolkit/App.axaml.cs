@@ -34,7 +34,7 @@ namespace BotwRegistryToolkit
                 View.DataContext = ViewModel;
 
                 GenericWindow mainWindow = WindowBuilder.Initialize(View)
-                    .WithWindowColors("SystemChromeLowColor", "SystemChromeMediumColor")
+                    .WithWindowColors("SystemChromeLowColor", "SystemChromeHighColor", 0.4)
                     .Build();
 
 #if DEBUG
