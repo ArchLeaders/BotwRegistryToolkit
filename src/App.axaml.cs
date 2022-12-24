@@ -34,8 +34,9 @@ namespace BotwRegistryToolkit
                 AppViewModel viewModel = new();
                 SettingsFactory = viewModel.SettingsView;
 
-                GenericWindow mainWindow = WindowBuilder.Initialize(new AppView())
+                GenericWindow mainWindow = WindowBuilder.Initialize(new AppView(viewModel))
                     .WithWindowColors("SystemChromeLowColor", "SystemChromeHighColor", 0.4)
+                    .WithMinBounds(800, 450)
                     .Build();
 
 #if DEBUG
