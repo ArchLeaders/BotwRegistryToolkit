@@ -27,6 +27,7 @@ namespace BotwRegistryToolkit.Views
             AfterCancelEvent += async () => {
                 DialogResult results = await MessageBox.ShowDialog("Are you sure you wish to exit without saving?", "Warning", DialogButtons.YesNoCancel);
                 if (results == DialogResult.Yes) {
+                    ValidateSave();
                     Environment.Exit(0);
                 }
             };
