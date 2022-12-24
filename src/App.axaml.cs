@@ -44,6 +44,7 @@ namespace BotwRegistryToolkit
 #endif
                 desktop.MainWindow = mainWindow;
                 ApplicationLoader.Attach(this);
+                SettingsFactory.ValidateSave();
             }
 
             base.OnFrameworkInitializationCompleted();
