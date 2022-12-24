@@ -62,8 +62,8 @@ namespace BotwRegistryToolkit.Views
 
         public static bool? ValidateRegistryInjector(string key, bool value)
         {
-            Func<bool, bool?> inject = RegistryModel.GetRegistrySet(key);
-            return inject.Invoke(value);
+            Func<bool, bool?>? inject = RegistryModel.GetRegistryInjector(key);
+            return inject?.Invoke(value);
         }
 
         public static bool? ValidateTheme(string value)
