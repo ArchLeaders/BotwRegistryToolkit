@@ -29,7 +29,7 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview4" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-preview4" />
     <PackageReference Include="AvaloniaGenerics" Version="1.0.5" />
-    <PackageReference Include="AvaloniaSettingsFactory" Version="1.2.4" />
+    <PackageReference Include="AvaloniaSettingsFactory" Version="1.2.6" />
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.5.1" />
   </ItemGroup>
   <ItemGroup>
