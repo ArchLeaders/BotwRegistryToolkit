@@ -2,7 +2,6 @@ using Avalonia;
 using Avalonia.Generics.Dialogs;
 using Avalonia.SettingsFactory;
 using Avalonia.SettingsFactory.Core;
-using Avalonia.SettingsFactory.ViewModels;
 using Avalonia.Themes.Fluent;
 using BotwRegistryToolkit.Models;
 using System.Reflection;
@@ -11,10 +10,11 @@ namespace BotwRegistryToolkit.Views
 {
     public partial class SettingsView : SettingsFactory, ISettingsValidator
     {
-        public SettingsView() => InitializeComponent();
-        public SettingsView(bool canCancel = true)
+        public SettingsView()
         {
             InitializeComponent();
+            FocusDelegate.PointerPressed += (s, e) => FocusDelegate.Focus();
+            FocusDelegate2.PointerPressed += (s, e) => FocusDelegate.Focus();
 
             AfterSaveEvent += async () => {
                 Config.Save();
@@ -31,14 +31,6 @@ namespace BotwRegistryToolkit.Views
                     Environment.Exit(0);
                 }
             };
-
-            SettingsFactoryOptions options = new() {
-                AlertAction = (msg) => MessageBox.ShowDialog(msg),
-                BrowseAction = async (title) => await new BrowserDialog(BrowserMode.OpenFolder).ShowDialog(),
-            };
-
-            // Initialize the settings layout
-            InitializeSettingsFactory(new SettingsFactoryViewModel(canCancel), this, Config, options);
         }
 
         public bool? ValidateBool(string key, bool value)
