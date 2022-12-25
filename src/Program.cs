@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Generics.Dialogs;
+using Avalonia.Generics.Extensions;
 using Avalonia.ReactiveUI;
 
 namespace BotwRegistryToolkit
@@ -16,7 +17,7 @@ namespace BotwRegistryToolkit
                 BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
             }
             catch (Exception ex) {
-                MessageBox.ShowDialog(ex.ToString(), "Unhandled Exception").RunSynchronously();
+                MessageBox.ShowDialog(ex.ToString(), "Unhandled Exception").Await();
             }
         }
 
