@@ -44,6 +44,7 @@ namespace BotwRegistryToolkit.Views
         public bool? ValidateBool(string key, bool value)
         {
             return key switch {
+                "SortByFileType" => null,
                 _ => ValidateRegistryInjector(key, value),
             };
         }
