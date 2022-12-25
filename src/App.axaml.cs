@@ -7,9 +7,11 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Generics;
 using Avalonia.Generics.Builders;
 using Avalonia.Generics.Controls;
+using Avalonia.Generics.Dialogs;
 using Avalonia.Markup.Xaml;
+using Avalonia.SettingsFactory;
+using Avalonia.SettingsFactory.ViewModels;
 using Avalonia.Themes.Fluent;
-using BotwRegistryToolkit.ViewModels;
 using BotwRegistryToolkit.Views;
 
 namespace BotwRegistryToolkit
@@ -30,11 +32,16 @@ namespace BotwRegistryToolkit
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) {
 
-                // Get SettingsFactory (SettingsView)
-                AppViewModel viewModel = new();
-                SettingsFactory = viewModel.SettingsView;
+                // Create SettingsFactory (SettingsView)
+                SettingsFactoryOptions options = new() {
+                    AlertAction = (msg) => MessageBox.ShowDialog(msg),
+                    BrowseAction = async (title) => await new BrowserDialog(BrowserMode.OpenFolder).ShowDialog(),
+                };
 
-                GenericWindow mainWindow = WindowBuilder.Initialize(new AppView(viewModel))
+                SettingsFactory = new();
+                SettingsFactory.InitializeSettingsFactory(new SettingsFactoryViewModel(true), SettingsFactory, Config, options);
+
+                GenericWindow mainWindow = WindowBuilder.Initialize(new AppView())
                     .WithWindowColors("SystemChromeLowColor", "SystemChromeHighColor", 0.4)
                     .WithMinBounds(800, 450)
                     .Build();
@@ -44,7 +51,6 @@ namespace BotwRegistryToolkit
 #endif
                 desktop.MainWindow = mainWindow;
                 ApplicationLoader.Attach(this);
-                SettingsFactory.ValidateSave();
             }
 
             base.OnFrameworkInitializationCompleted();
