@@ -1,6 +1,4 @@
-﻿#pragma warning disable CA1822 // Mark members as static
-
-global using static BotwRegistryToolkit.Models.SettingsModel;
+﻿global using static BotwRegistryToolkit.Models.SettingsModel;
 using Avalonia.Generics.Dialogs;
 using Avalonia.SettingsFactory.Core;
 using System.Runtime.InteropServices;
@@ -33,7 +31,7 @@ namespace BotwRegistryToolkit.Models
             if (!File.Exists($"{DataFolder}\\Runtime.exe")) {
                 if (File.Exists(".\\Runtime.exe")) {
                     File.Copy(".\\Runtime.exe", $"{DataFolder}\\Runtime.exe");
-        }
+                }
                 else {
                     try {
                         using HttpClient client = new();
@@ -69,6 +67,10 @@ namespace BotwRegistryToolkit.Models
 
             return this;
         }
+
+
+        [Setting("Sort by File Type", GlobalSettings_SortByFileType, Category = "Global Settings", Folder = "Registry Tools")]
+        public bool SortByFileType { get; set; } = true;
 
         //
         // Aamp Tools

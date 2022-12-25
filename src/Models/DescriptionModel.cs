@@ -4,6 +4,11 @@ namespace BotwRegistryToolkit.Models
 {
     public class DescriptionModel
     {
+        public const string GlobalSettings_SortByFileType = """
+            Organize each file-type tool into sub-menus.
+            Known issues: menu items three or more levels deep have an annoying white border (only noticable in dark theme)
+            """;
+
         //
         // Aamp Tools
 
