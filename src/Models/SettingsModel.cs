@@ -73,11 +73,11 @@ namespace BotwRegistryToolkit.Models
         //
         // Aamp Tools
 
-        [Setting("Convert To Aamp", AampTools_ConvertToAamp, Category = "Aamp Tools", Folder = "Registry Tools")]
-        public bool ConvertYamlToAamp { get; set; } = true;
-
         [Setting("Convert To Yaml", AampTools_ConvertToAamp, Category = "Aamp Tools", Folder = "Registry Tools")]
         public bool ConvertAampToYaml { get; set; } = true;
+
+        [Setting("Convert To Aamp", AampTools_ConvertToAamp, Category = "Aamp Tools", Folder = "Registry Tools")]
+        public bool ConvertYamlToAamp { get; set; } = true;
 
         [Setting("Delete Source", AampTools_DeleteSource, Category = "Aamp Tools", Folder = "Registry Tools")]
         public bool AampDeleteSource { get; set; } = false;
