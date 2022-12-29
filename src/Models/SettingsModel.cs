@@ -88,6 +88,21 @@ namespace BotwRegistryToolkit.Models
         public bool AampDeleteSource { get; set; } = false;
 
         //
+        // Bfev Tools
+
+        [Setting("Convert To Json", BfevTools_ConvertBfevToJson, Category = "Bfev Tools", Folder = "Registry Tools")]
+        public bool ConvertBfevToJson { get; set; } = true;
+
+        [Setting("Convert To Bfev", BfevTools_ConvertJsonToBfev, Category = "Bfev Tools", Folder = "Registry Tools")]
+        public bool ConvertJsonToBfev { get; set; } = true;
+
+        [Setting("Delete Source", BfevTools_DeleteSource, Category = "Bfev Tools", Folder = "Registry Tools")]
+        public bool BfevDeleteSource { get; set; } = false;
+
+        [Setting("Format Json", BfevTools_FormatJson, Category = "Bfev Tools", Folder = "Registry Tools")]
+        public bool BfevFormatJson { get; set; } = true;
+
+        //
         // Byml Tools
 
         [Setting("Convert To Yaml", BymlTools_ConvertBymlToYaml, Category = "Byml Tools", Folder = "Registry Tools")]

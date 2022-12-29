@@ -32,6 +32,27 @@ namespace BotwRegistryToolkit.Models
             """;
 
         //
+        // Bfev Tools
+
+        public const string BfevTools_ConvertBfevToJson = """
+            Botw / Bfev / Convert Bfev to Json
+            Attempts to converts a binary BFEV file to a JSON text file
+            """;
+
+        public const string BfevTools_ConvertJsonToBfev = """
+            Botw / Bfev / Convert Json to Bfev
+            Attempts to converts a JSON text file to a binary BFEV file
+            """;
+
+        public const string BfevTools_DeleteSource = """
+            Deletes the source file after conversion
+            """;
+
+        public const string BfevTools_FormatJson = """
+            Format the converted JSON text files
+            """;
+
+        //
         // Byml Tools
 
         public const string BymlTools_ConvertBymlToYaml = """

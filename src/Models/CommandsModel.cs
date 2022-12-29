@@ -15,6 +15,17 @@
         );
 
         // 
+        // Bfev
+
+        public static CommandInfo ConvertBfevToJson => new(
+            "*", "Convert Bfev To Json", "Bfev", ".bfevfl .bfevtm", ("deleteSource", SettingsFactory["BfevDeleteSource"]!), ("formatJson", SettingsFactory["BfevFormatJson"]!)
+        );
+
+        public static CommandInfo ConvertJsonToBfev => new(
+            "*", "Convert Json To Bfev", "Bfev", ".json", ("deleteSource", SettingsFactory["BfevDeleteSource"]!)
+        );
+
+        // 
         // Byml
 
         public static CommandInfo ConvertBymlToYaml => new(

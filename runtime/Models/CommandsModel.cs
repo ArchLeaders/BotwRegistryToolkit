@@ -1,4 +1,5 @@
-﻿using Nintendo.Aamp;
+﻿using BfevLibrary;
+using Nintendo.Aamp;
 using Nintendo.Byml;
 using SharpYaml;
 using System.Reflection;
@@ -72,6 +73,20 @@ namespace BotwRegistryToolkit.Runtime.Models
             catch (SyntaxErrorException ex) {
                 throw new Exception("Invalid YAML file", ex);
             }
+        }
+
+        public static void ConvertBfevToJson(string file, bool deleteSource, bool formatJson)
+        {
+            BfevFile bfev = BfevFile.FromBinary(file);
+            if (deleteSource == true) File.Delete(file);
+            File.WriteAllText($"{file}.json", bfev.ToJson(formatJson));
+        }
+
+        public static void ConvertJsonToBfev(string file, bool deleteSource)
+        {
+            BfevFile bfev = BfevFile.FromJson(file);
+            if (deleteSource == true) File.Delete(file);
+            File.WriteAllBytes($"{Path.GetDirectoryName(file)}\\{Path.GetFileNameWithoutExtension(file)}", bfev.ToBinary());
         }
 
         public static void ConvertBymlToYaml(string file, bool deleteSource)
