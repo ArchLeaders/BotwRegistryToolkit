@@ -17,7 +17,7 @@ namespace BotwRegistryToolkit.Models
                     if (isEnable) {
                         string flags = command.Flags.Length > 0 ? "--" + string.Join(" --", command.Flags.Select(x => $"{x.Key}={x.Value}")) : "";
                         string? exts = command.FileExtensions != null ? string.Join(" OR ", command.FileExtensions.Split(' ').Select(x => $"System.FileExtension:={x}")) : null;
-                        Inject(command.Folder, command.Name, exts, command.IsLast, $"""
+                        Inject(command.Folder, command.Name, exts, command.IsNewGroup, $"""
                             "{Config.DataFolder}\Runtime.exe" {key} "%1" {flags}
                             """);
                     }
@@ -42,7 +42,7 @@ namespace BotwRegistryToolkit.Models
             return key.CreateSubKey("shell");
         }
 
-        public static void Inject(string folderName, string commandName, string? exts, bool isLast, string command)
+        public static void Inject(string folderName, string commandName, string? exts, bool isNewGroup, string command)
         {
             // Hard reset to avoid duplicates
             Delete(folderName, commandName);
@@ -72,8 +72,8 @@ namespace BotwRegistryToolkit.Models
                     commandParent.SetValue("AppliesTo", exts);
                 }
 
-                if (isLast) {
-                    commandParent.SetValue("CommandFlags", 0x40, RegistryValueKind.DWord);
+                if (isNewGroup) {
+                    commandParent.SetValue("CommandFlags", 0x20, RegistryValueKind.DWord);
                 }
 
                 using RegistryKey commandKey = commandParent.CreateSubKey("command");
