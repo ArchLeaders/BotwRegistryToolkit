@@ -1,6 +1,8 @@
 ﻿using BfevLibrary;
 using Nintendo.Aamp;
 using Nintendo.Byml;
+using Nintendo.Yaz0;
+using SarcLibrary;
 using SharpYaml;
 using System.Reflection;
 
@@ -106,6 +108,27 @@ namespace BotwRegistryToolkit.Runtime.Models
             catch (SyntaxErrorException ex) {
                 throw new Exception("Invalid YAML file", ex);
             }
+        }
+
+        public static void ExtractSarc(string file, bool deleteSource)
+        {
+            Yaz0Helper.IsYaz0(file, out byte[] data);
+            SarcFile sarc = SarcFile.FromBinary(data);
+            if (deleteSource == true) File.Delete(file);
+            sarc.ExtractToDirectory(deleteSource ? file : Path.GetDirectoryName(file)!);
+        }
+
+        public static void RepackSarc(string folder, bool deleteSource)
+        {
+            SarcFile sarc = SarcFile.LoadFromDirectory(folder);
+            if (deleteSource == true) Directory.Delete(folder, true);
+
+            byte[] data = sarc.ToBinary();
+            if (Path.GetExtension(folder).StartsWith(".s")) {
+                data = Yaz0.Compress(data);
+            }
+
+            File.WriteAllBytes(deleteSource ? folder : $"{folder}.sarc", data);
         }
     }
 }

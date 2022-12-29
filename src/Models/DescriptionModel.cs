@@ -5,13 +5,13 @@ namespace BotwRegistryToolkit.Models
     public class DescriptionModel
     {
         public const string GlobalSettings_SortByFileType = """
-            Organize each file-type tool into sub-menus.
+            Organize each file-type tool into sub-menus
             Known issues: menu items three or more levels deep have an annoying white border (only noticable in dark theme)
             """;
 
         public const string GlobalSettings_PrefixWithFolderName = """
-            Prefixes menu items with the parent folder name.
-            Only works when 'Sort By File Type' is disabled.
+            Prefixes menu items with the parent folder name
+            Only works when 'Sort By File Type' is disabled
             """;
 
         //
@@ -67,6 +67,24 @@ namespace BotwRegistryToolkit.Models
 
         public const string BymlTools_DeleteSource = """
             Deletes the source file after conversion
+            """;
+
+        //
+        // Sarc Tools
+
+        public const string SarcTools_ExtractSarc = """
+            Botw / Sarc / Convert Sarc to Yaml
+            Attempts to extract a SARC archive to a folder named after the SARC file
+            Note: if 'Delete Source' is enabled, the extension will be used when repacking (default is '.sarc')
+            """;
+
+        public const string SarcTools_RepackSarc = """
+            Botw / Sarc / Repack Sarc
+            Packs a folder into a SARC archive
+            """;
+
+        public const string SarcTools_DeleteSource = """
+            Deletes the source file or folder after extracting or repacking
             """;
     }
 }

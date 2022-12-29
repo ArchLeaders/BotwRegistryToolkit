@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -16,6 +16,7 @@
     <PackageReference Include="AampLibrary" Version="1.0.10" />
     <PackageReference Include="BfevLibrary" Version="0.9.0" />
     <PackageReference Include="BymlLibrary" Version="1.1.4" />
+    <PackageReference Include="SarcLibrary" Version="2.0.0" />
     <PackageReference Include="System.Windows.Extensions" Version="7.0.0" />
     <PackageReference Include="Yaz0Library" Version="1.0.5" />
   </ItemGroup>

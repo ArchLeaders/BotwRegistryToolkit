@@ -114,6 +114,18 @@ namespace BotwRegistryToolkit.Models
         [Setting("Delete Source", BymlTools_DeleteSource, Category = "Byml Tools", Folder = "Registry Tools")]
         public bool BymlDeleteSource { get; set; } = false;
 
+        //
+        // Sarc Tools
+
+        [Setting("Extract Sarc", SarcTools_ExtractSarc, Category = "Sarc Tools", Folder = "Registry Tools")]
+        public bool ExtractSarc { get; set; } = true;
+
+        [Setting("Repack Sarc", SarcTools_RepackSarc, Category = "Sarc Tools", Folder = "Registry Tools")]
+        public bool RepackSarc { get; set; } = true;
+
+        [Setting("Delete Source", SarcTools_DeleteSource, Category = "Sarc Tools", Folder = "Registry Tools")]
+        public bool SarcDeleteSource { get; set; } = false;
+
         // 
         // App Settings
 

@@ -35,5 +35,16 @@
         public static CommandInfo ConvertYamlToByml => new(
             "*", "Convert Yaml To Byml", "Byml", ".yml .yaml", ("deleteSource", SettingsFactory["BymlDeleteSource"]!)
         );
+
+        // 
+        // Sarc
+
+        public static CommandInfo ExtractSarc => new (
+            "*", "Extract Sarc", "Sarc", null, ("deleteSource", SettingsFactory["SarcDeleteSource"]!)
+        );
+
+        public static CommandInfo RepackSarc => new(
+            "Folder", "Repack Sarc", "Sarc", null, ("deleteSource", SettingsFactory["SarcDeleteSource"]!)
+        );
     }
 }
