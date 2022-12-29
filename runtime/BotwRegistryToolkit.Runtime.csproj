@@ -9,8 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="C:\Users\ArchLeaders\.nuget\packages\yaz0library\1.0.5\contentFiles\any\net7.0\Lib\Yaz0.dll" />
+  </ItemGroup>
+	
+  <ItemGroup>
     <PackageReference Include="AampLibrary" Version="1.0.10" />
     <PackageReference Include="System.Windows.Extensions" Version="7.0.0" />
+    <PackageReference Include="Yaz0Library" Version="1.0.5" />
   </ItemGroup>
 
 </Project>

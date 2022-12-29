@@ -56,7 +56,8 @@ namespace BotwRegistryToolkit.Runtime.Models
 
         public static void ConvertAampToYaml(string file, bool deleteSource)
         {
-            AampFile aamp = new(file);
+            Yaz0Helper.IsYaz0(file, out byte[] data);
+            AampFile aamp = new(data);
             if (deleteSource == true) File.Delete(file);
             File.WriteAllText($"{file}.yml", aamp.ToYml());
         }
