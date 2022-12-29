@@ -1,4 +1,5 @@
 ﻿using Nintendo.Aamp;
+using Nintendo.Byml;
 using SharpYaml;
 using System.Reflection;
 
@@ -68,6 +69,26 @@ namespace BotwRegistryToolkit.Runtime.Models
                 AampFile aamp = AampFile.FromYmlFile(file);
                 if (deleteSource == true) File.Delete(file);
                 File.WriteAllBytes($"{Path.GetDirectoryName(file)}\\{Path.GetFileNameWithoutExtension(file)}", aamp.ToBinary());
+            }
+            catch (SyntaxErrorException ex) {
+                throw new Exception("Invalid YAML file", ex);
+            }
+        }
+
+        public static void ConvertBymlToYaml(string file, bool deleteSource)
+        {
+            Yaz0Helper.IsYaz0(file, out byte[] data);
+            BymlFile byml = BymlFile.FromBinary(data);
+            if (deleteSource == true) File.Delete(file);
+            File.WriteAllText($"{file}.yml", byml.ToYaml());
+        }
+
+        public static void ConvertYamlToByml(string file, bool deleteSource)
+        {
+            try {
+                BymlFile byml = BymlFile.FromYamlFile(file);
+                if (deleteSource == true) File.Delete(file);
+                File.WriteAllBytes($"{Path.GetDirectoryName(file)}\\{Path.GetFileNameWithoutExtension(file)}", byml.ToBinary());
             }
             catch (SyntaxErrorException ex) {
                 throw new Exception("Invalid YAML file", ex);
