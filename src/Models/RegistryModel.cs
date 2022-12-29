@@ -48,7 +48,6 @@ namespace BotwRegistryToolkit.Models
             Delete(folderName, commandName);
 
             string safeFolderName = folderName.ToLower().Replace(' ', '_');
-            string safeCommandName = commandName.ToLower().Replace(' ', '_');
 
             if ((bool)SettingsFactory["SortByFileType"]! == true) {
                 using RegistryKey folder = Shell.CreateSubKey(safeFolderName);
@@ -56,7 +55,7 @@ namespace BotwRegistryToolkit.Models
                 folder.SetValue("SubCommands", "", RegistryValueKind.String);
 
                 using RegistryKey folderShell = folder.CreateSubKey("shell");
-                using RegistryKey commandParent = folderShell.CreateSubKey(safeCommandName);
+                using RegistryKey commandParent = folderShell.CreateSubKey(commandName.ToLower().Replace(' ', '_'));
                 commandParent.SetValue("", commandName);
                 if (exts != null) {
                     commandParent.SetValue("AppliesTo", exts);
@@ -66,8 +65,8 @@ namespace BotwRegistryToolkit.Models
                 commandKey.SetValue("", command);
             }
             else {
-                using RegistryKey commandParent = Shell.CreateSubKey(safeCommandName);
-                commandParent.SetValue("", commandName);
+                using RegistryKey commandParent = Shell.CreateSubKey($"{safeFolderName}_{commandName.ToLower().Replace(' ', '_')}");
+                commandParent.SetValue("", (bool)SettingsFactory["PrefixWithFolderName"]! ? $"{folderName}: {commandName}" : commandName);
                 if (exts != null) {
                     commandParent.SetValue("AppliesTo", exts);
                 }
@@ -85,12 +84,13 @@ namespace BotwRegistryToolkit.Models
         {
             string[] subKeys = Shell.GetSubKeyNames();
 
-            string safeCommandName = commandName.ToLower().Replace(' ', '_');
+            string safeFolderName = folderName.ToLower().Replace(' ', '_');
+            string safeCommandName = (bool)SettingsFactory["SortByFileType"]! ? commandName.ToLower().Replace(' ', '_') : $"{safeFolderName}_{commandName.ToLower().Replace(' ', '_')}";
+
             if (subKeys.Contains(safeCommandName)) {
                 Shell.DeleteSubKeyTree(safeCommandName);
             }
 
-            string safeFolderName = folderName.ToLower().Replace(' ', '_');
             if (subKeys.Contains(safeFolderName)) {
                 using RegistryKey? folder = Shell.OpenSubKey(safeFolderName, true);
                 if (folder != null) {
