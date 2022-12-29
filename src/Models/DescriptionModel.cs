@@ -13,12 +13,12 @@ namespace BotwRegistryToolkit.Models
         // Aamp Tools
 
         public const string AampTools_ConvertToYaml = """
-            Botw / Aamp / Convert to Aamp
+            Botw / Aamp / Convert Aamp to Yaml
             Attempts to converts a binary AAMP file to a YAML text file
             """;
 
         public const string AampTools_ConvertToAamp = """
-            Botw / Aamp / Convert to Aamp
+            Botw / Aamp / Convert Yaml to Aamp
             Attempts to converts the input file (YAML) to a binary AAMP
             """;
 
