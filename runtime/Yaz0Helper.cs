@@ -7,7 +7,7 @@ namespace BotwRegistryToolkit.Runtime
         public static bool IsYaz0(string file, out byte[] data)
         {
             data = File.ReadAllBytes(file);
-            if (data.AsSpan().SequenceEqual("Yaz0"u8)) {
+            if (data.AsSpan()[0..4].SequenceEqual("Yaz0"u8)) {
                 data = Yaz0.Decompress(data);
                 return true;
             }
