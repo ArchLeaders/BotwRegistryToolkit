@@ -12,7 +12,7 @@ namespace BotwRegistryToolkit.Models
         {
             CommandInfo? command = typeof(CommandsModel).GetProperty(key)?.GetValue(null) as CommandInfo;
             if (command != null) {
-                Shell ??= Setup(command.Class);
+                Shell = Setup(command.Class);
                 return (isEnable) => {
                     if (isEnable) {
                         string flags = command.Flags.Length > 0 ? "--" + string.Join(" --", command.Flags.Select(x => $"{x.Key}={x.Value}")) : "";
