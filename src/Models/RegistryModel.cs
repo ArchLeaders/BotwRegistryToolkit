@@ -6,13 +6,13 @@ namespace BotwRegistryToolkit.Models
 {
     public static class RegistryModel
     {
-        private const string BotwKey = "*\\shell\\botw";
+        public static string GetKey(string cls) => $"{cls}\\shell\\botw";
 
         public static Func<bool, bool?>? GetRegistryInjector(string key)
         {
             CommandInfo? command = (typeof(CommandsModel).GetProperty(key)?.GetValue(null) as CommandInfo);
             if (command != null) {
-                Shell ??= Setup();
+                Shell ??= Setup(command.Class);
                 return (isEnable) => {
                     if (isEnable) {
                         string flags = command.Flags.Length > 0 ? "--" + string.Join(" --", command.Flags.Select(x => $"{x.Key}={x.Value}")) : "";
@@ -34,9 +34,9 @@ namespace BotwRegistryToolkit.Models
         }
 
         public static RegistryKey Shell { get; set; } = null!;
-        public static RegistryKey Setup()
+        public static RegistryKey Setup(string cls)
         {
-            using RegistryKey key = Registry.ClassesRoot.CreateSubKey(BotwKey);
+            using RegistryKey key = Registry.ClassesRoot.CreateSubKey(GetKey(cls));
             key.SetValue("MUIVerb", "Botw", RegistryValueKind.String);
             key.SetValue("SubCommands", "", RegistryValueKind.String);
             return key.CreateSubKey("shell");
