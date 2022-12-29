@@ -89,7 +89,7 @@ namespace BotwRegistryToolkit.Models
             string[] subKeys = Shell.GetSubKeyNames();
 
             string safeFolderName = folderName.ToLower().Replace(' ', '_');
-            string safeCommandName = (bool)SettingsFactory["SortByFileType"]! ? commandName.ToLower().Replace(' ', '_') : $"{safeFolderName}_{commandName.ToLower().Replace(' ', '_')}";
+            string safeCommandName = (bool)SettingsFactory["SortByFileType"]! ? $"{safeFolderName}_{commandName.ToLower().Replace(' ', '_')}" : commandName.ToLower().Replace(' ', '_');
 
             if (subKeys.Contains(safeCommandName)) {
                 Shell.DeleteSubKeyTree(safeCommandName);
