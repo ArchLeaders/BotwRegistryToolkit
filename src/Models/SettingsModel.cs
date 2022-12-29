@@ -72,6 +72,9 @@ namespace BotwRegistryToolkit.Models
         [Setting("Sort by File Type", GlobalSettings_SortByFileType, Category = "Global Settings", Folder = "Registry Tools")]
         public bool SortByFileType { get; set; } = true;
 
+        [Setting("Prefix with Folder Name", GlobalSettings_PrefixWithFolderName, Category = "Global Settings", Folder = "Registry Tools")]
+        public bool PrefixWithFolderName { get; set; } = false;
+
         //
         // Aamp Tools
 

@@ -9,6 +9,11 @@ namespace BotwRegistryToolkit.Models
             Known issues: menu items three or more levels deep have an annoying white border (only noticable in dark theme)
             """;
 
+        public const string GlobalSettings_PrefixWithFolderName = """
+            Prefixes menu items with the parent folder name.
+            Only works when 'Sort By File Type' is disabled.
+            """;
+
         //
         // Aamp Tools
 
