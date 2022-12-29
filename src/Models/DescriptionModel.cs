@@ -24,7 +24,7 @@ namespace BotwRegistryToolkit.Models
 
         public const string AampTools_ConvertYamlToAamp = """
             Botw / Aamp / Convert Yaml to Aamp
-            Attempts to converts the input file (YAML) to a binary AAMP
+            Attempts to converts a YAML text file to a binary AAMP
             """;
 
         public const string AampTools_DeleteSource = """
@@ -62,7 +62,7 @@ namespace BotwRegistryToolkit.Models
 
         public const string BymlTools_ConvertYamlToByml = """
             Botw / Byml / Convert Yaml to Byml
-            Attempts to converts the input file (YAML) to a binary BYML
+            Attempts to converts a YAML text file to a binary BYML
             """;
 
         public const string BymlTools_DeleteSource = """
