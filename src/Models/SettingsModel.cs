@@ -87,6 +87,18 @@ namespace BotwRegistryToolkit.Models
         [Setting("Delete Source", AampTools_DeleteSource, Category = "Aamp Tools", Folder = "Registry Tools")]
         public bool AampDeleteSource { get; set; } = false;
 
+        //
+        // Byml Tools
+
+        [Setting("Convert To Yaml", BymlTools_ConvertBymlToYaml, Category = "Byml Tools", Folder = "Registry Tools")]
+        public bool ConvertBymlToYaml { get; set; } = true;
+
+        [Setting("Convert To Byml", BymlTools_ConvertYamlToByml, Category = "Byml Tools", Folder = "Registry Tools")]
+        public bool ConvertYamlToByml { get; set; } = true;
+
+        [Setting("Delete Source", BymlTools_DeleteSource, Category = "Byml Tools", Folder = "Registry Tools")]
+        public bool BymlDeleteSource { get; set; } = false;
+
         // 
         // App Settings
 

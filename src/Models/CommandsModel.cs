@@ -13,5 +13,16 @@
         public static CommandInfo ConvertYamlToAamp => new(
             "Convert Yaml To Aamp", "Aamp", ".yml .yaml", false, ("deleteSource", SettingsFactory["AampDeleteSource"]!)
         );
+
+        // 
+        // Byml
+
+        public static CommandInfo ConvertBymlToYaml => new(
+            "Convert Byml To Yaml", "Byml", null, true, ("deleteSource", SettingsFactory["BymlDeleteSource"]!)
+        );
+
+        public static CommandInfo ConvertYamlToByml => new(
+            "Convert Yaml To Byml", "Byml", ".yml .yaml", false, ("deleteSource", SettingsFactory["BymlDeleteSource"]!)
+        );
     }
 }

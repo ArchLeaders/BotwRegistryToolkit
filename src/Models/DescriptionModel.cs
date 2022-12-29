@@ -30,5 +30,22 @@ namespace BotwRegistryToolkit.Models
         public const string AampTools_DeleteSource = """
             Deletes the source file after conversion
             """;
+
+        //
+        // Byml Tools
+
+        public const string BymlTools_ConvertBymlToYaml = """
+            Botw / Byml / Convert Byml to Yaml
+            Attempts to converts a binary BYML file to a YAML text file
+            """;
+
+        public const string BymlTools_ConvertYamlToByml = """
+            Botw / Byml / Convert Yaml to Byml
+            Attempts to converts the input file (YAML) to a binary BYML
+            """;
+
+        public const string BymlTools_DeleteSource = """
+            Deletes the source file after conversion
+            """;
     }
 }
