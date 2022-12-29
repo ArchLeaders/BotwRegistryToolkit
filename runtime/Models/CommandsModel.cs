@@ -57,8 +57,7 @@ namespace BotwRegistryToolkit.Runtime.Models
 
         public static void ConvertAampToYaml(string file, bool deleteSource)
         {
-            Yaz0Helper.IsYaz0(file, out byte[] data);
-            AampFile aamp = new(data);
+            AampFile aamp = new(file);
             if (deleteSource == true) File.Delete(file);
             File.WriteAllText($"{file}.yml", aamp.ToYml());
         }
@@ -77,8 +76,7 @@ namespace BotwRegistryToolkit.Runtime.Models
 
         public static void ConvertBymlToYaml(string file, bool deleteSource)
         {
-            Yaz0Helper.IsYaz0(file, out byte[] data);
-            BymlFile byml = BymlFile.FromBinary(data);
+            BymlFile byml = BymlFile.FromBinary(file);
             if (deleteSource == true) File.Delete(file);
             File.WriteAllText($"{file}.yml", byml.ToYaml());
         }
