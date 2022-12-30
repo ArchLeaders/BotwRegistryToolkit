@@ -10,7 +10,7 @@ namespace BotwRegistryToolkit.Runtime.Models
 {
     public class CommandsModel
     {
-        public static IEnumerable<Action> GetCommands(string[] args)
+        public static Task GetCommand(string[] args)
         {
             // Collect flags
             Dictionary<string, object> flags = args[1..]
@@ -46,26 +46,25 @@ namespace BotwRegistryToolkit.Runtime.Models
                 }
             }
 
-            // Yield return the invoked command
-            IEnumerable<string> targets = args[1..].Where(x => !x.StartsWith("--") && (File.Exists(x) || Directory.Exists(x))).Distinct();
-            if (!targets.Any()) {
-                throw new Exception($"No valid targets were found for the command '{args[0]}'");
-            }
+            // Return the invoked command
+            string? target = args[1..].Where(x => !x.StartsWith("--") && (File.Exists(x) || Directory.Exists(x))).Distinct().FirstOrDefault();
+            parameters[0] = target
+                ?? throw new ArgumentException($"No valid target was found for the command '{args[0]}'");
 
-            foreach (string target in targets) {
-                parameters[0] = target;
-                yield return () => funcInfo.Invoke(null, parameters);
-            }
+            return funcInfo.Invoke(null, parameters) as Task
+                ?? throw new NullReferenceException($"The specified command '{args[0]}' returned null");
         }
 
-        public static void ConvertAampToYaml(string file, bool deleteSource)
+        public static Task ConvertAampToYaml(string file, bool deleteSource)
         {
             AampFile aamp = new(file);
             if (deleteSource == true) File.Delete(file);
             File.WriteAllText($"{file}.yml", aamp.ToYml());
+
+            return Task.CompletedTask;
         }
 
-        public static void ConvertYamlToAamp(string file, bool deleteSource)
+        public static Task ConvertYamlToAamp(string file, bool deleteSource)
         {
             try {
                 AampFile aamp = AampFile.FromYmlFile(file);
@@ -75,30 +74,38 @@ namespace BotwRegistryToolkit.Runtime.Models
             catch (SyntaxErrorException ex) {
                 throw new Exception("Invalid YAML file", ex);
             }
+
+            return Task.CompletedTask;
         }
 
-        public static void ConvertBfevToJson(string file, bool deleteSource, bool formatJson)
+        public static Task ConvertBfevToJson(string file, bool deleteSource, bool formatJson)
         {
             BfevFile bfev = BfevFile.FromBinary(file);
             if (deleteSource == true) File.Delete(file);
             File.WriteAllText($"{file}.json", bfev.ToJson(formatJson));
+
+            return Task.CompletedTask;
         }
 
-        public static void ConvertJsonToBfev(string file, bool deleteSource)
+        public static Task ConvertJsonToBfev(string file, bool deleteSource)
         {
             BfevFile bfev = BfevFile.FromJson(file);
             if (deleteSource == true) File.Delete(file);
             File.WriteAllBytes($"{Path.GetDirectoryName(file)}\\{Path.GetFileNameWithoutExtension(file)}", bfev.ToBinary());
+
+            return Task.CompletedTask;
         }
 
-        public static void ConvertBymlToYaml(string file, bool deleteSource)
+        public static Task ConvertBymlToYaml(string file, bool deleteSource)
         {
             BymlFile byml = BymlFile.FromBinary(file);
             if (deleteSource == true) File.Delete(file);
             File.WriteAllText($"{file}.yml", byml.ToYaml());
+
+            return Task.CompletedTask;
         }
 
-        public static void ConvertYamlToByml(string file, bool deleteSource)
+        public static Task ConvertYamlToByml(string file, bool deleteSource)
         {
             try {
                 BymlFile byml = BymlFile.FromYamlFile(file);
@@ -108,17 +115,19 @@ namespace BotwRegistryToolkit.Runtime.Models
             catch (SyntaxErrorException ex) {
                 throw new Exception("Invalid YAML file", ex);
             }
+
+            return Task.CompletedTask;
         }
 
-        public static void ExtractSarc(string file, bool deleteSource)
+        public static async Task ExtractSarc(string file, bool deleteSource)
         {
             Yaz0Helper.IsYaz0(file, out byte[] data);
             SarcFile sarc = SarcFile.FromBinary(data);
             if (deleteSource == true) File.Delete(file);
-            sarc.ExtractToDirectory(deleteSource ? file : Path.GetDirectoryName(file)!);
+            await sarc.ExtractToDirectory(deleteSource ? file : string.Join('.', file.Split('.')[..^1]));
         }
 
-        public static void RepackSarc(string folder, bool deleteSource)
+        public static Task RepackSarc(string folder, bool deleteSource)
         {
             SarcFile sarc = SarcFile.LoadFromDirectory(folder);
             if (deleteSource == true) Directory.Delete(folder, true);
@@ -129,6 +138,8 @@ namespace BotwRegistryToolkit.Runtime.Models
             }
 
             File.WriteAllBytes(deleteSource ? folder : $"{folder}.sarc", data);
+
+            return Task.CompletedTask;
         }
     }
 }

@@ -11,33 +11,16 @@ if (args.Length < 2) {
 // Hide window
 WindowHelper.SetWindowMode(WindowMode.Hide);
 
-bool error = false;
 try {
-    await Parallel.ForEachAsync(CommandsModel.GetCommands(args), async (command, cancellationToken) => {
-        try {
-            await Task.Run(command, cancellationToken);
-        }
-        catch (Exception ex) {
-            HandleException(ex);
-        }
-    });
+    await CommandsModel.GetCommand(args);
 }
 catch (Exception ex) {
-    HandleException(ex);
-}
-
-void HandleException(Exception ex)
-{
-    error = true;
-
     WindowHelper.SetWindowMode(WindowMode.Show);
     Console.ForegroundColor = ConsoleColor.DarkRed;
     SystemSounds.Exclamation.Play();
     Console.WriteLine(ex);
     Console.ResetColor();
-}
 
-if (error) {
     Console.WriteLine("\nPress enter to continue. . .");
     Console.ReadLine();
 }
