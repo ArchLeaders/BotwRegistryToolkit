@@ -137,7 +137,7 @@ namespace BotwRegistryToolkit.Runtime.Models
                 data = Yaz0.Compress(data);
             }
 
-            File.WriteAllBytes(deleteSource ? folder : $"{folder}.sarc", data);
+            File.WriteAllBytes(deleteSource && Path.GetFileName(folder).Contains('.') ? folder : $"{folder}.sarc", data);
 
             return Task.CompletedTask;
         }
