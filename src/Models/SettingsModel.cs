@@ -40,7 +40,7 @@ namespace BotwRegistryToolkit.Models
                     List<Dictionary<string, JsonElement>> releases = JsonSerializer.Deserialize<List<Dictionary<string, JsonElement>>>(
                         await client.GetStringAsync(request)) ?? throw new Exception($"Could not parse GitHub release info from '{request}'");
 
-                    string download = releases[0]["assets"][0].Deserialize<Dictionary<string, JsonElement>>()?["browser_download_url"].ToString()
+                    string download = releases[0]["assets"][1].Deserialize<Dictionary<string, JsonElement>>()?["browser_download_url"].ToString()
                         ?? throw new Exception($"Invalid download url from '{request}# [0] > assets > [0]'");
 
                     File.WriteAllBytes($"{DataFolder}\\Runtime.exe", await client.GetByteArrayAsync(download));
