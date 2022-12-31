@@ -32,7 +32,7 @@ jobs:
 
       # Windows
       - name: Publish BotwRegistryToolkit
-        run: dotnet publish src/${{ env.proj_desktop }}.csproj -r win-x64 --configuration Release --version-suffix ${{ steps.version.outputs.version-without-v }} --output ${{ env.build }} --sc false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+        run: dotnet publish src/${{ env.proj_desktop }}.csproj -r win-x64 --configuration Release --version-suffix ${{ steps.version.outputs.version-without-v }} --output ${{ env.build }} --sc false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:Version=${{ steps.version.outputs.version-without-v }}
 
       # Windows (Runtime)
       - name: Publish BotwRegistryToolkit.Runtime
