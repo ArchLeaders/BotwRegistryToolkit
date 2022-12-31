@@ -7,7 +7,7 @@
         // Aamp
 
         public static CommandInfo ConvertAampToYaml => new(
-            "*", "Convert Aamp To Yaml", "Aamp", "b", ("deleteSource", SettingsFactory["AampDeleteSource"]!)
+            "*", "Convert Aamp To Yaml", "Aamp", null, ("deleteSource", SettingsFactory["AampDeleteSource"]!)
         );
 
         public static CommandInfo ConvertYamlToAamp => new(
@@ -29,7 +29,7 @@
         // Byml
 
         public static CommandInfo ConvertBymlToYaml => new(
-            "*", "Convert Byml To Yaml", "Byml", "b", ("deleteSource", SettingsFactory["BymlDeleteSource"]!)
+            "*", "Convert Byml To Yaml", "Byml", null, ("deleteSource", SettingsFactory["BymlDeleteSource"]!)
         );
 
         public static CommandInfo ConvertYamlToByml => new(
