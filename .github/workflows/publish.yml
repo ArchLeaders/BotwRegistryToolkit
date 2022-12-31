@@ -5,9 +5,6 @@ on:
     tags:
       - "v*"
 
-env:
-  build: "${{ github.workspace }}/build"
-
 jobs:
   deploy_botw_save_manager_windows:
     name: "Deploy BotwRegistryToolkit"
@@ -15,7 +12,9 @@ jobs:
 
     env:
       proj_desktop: "BotwRegistryToolkit"
+      build: "${{ github.workspace }}/build_desktop"
       proj_runtime: "BotwRegistryToolkit.Runtime"
+      build_runtime: "${{ github.workspace }}/build"
 
     steps:
       - name: "Checkout"
@@ -36,7 +35,7 @@ jobs:
 
       # Windows (Runtime)
       - name: Publish BotwRegistryToolkit.Runtime
-        run: dotnet publish runtime/${{ env.proj_runtime }}.csproj -r win-x64 --configuration Release --version-suffix ${{ steps.version.outputs.version-without-v }} --output ${{ env.build }} --sc false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+        run: dotnet publish runtime/${{ env.proj_runtime }}.csproj -r win-x64 --configuration Release --version-suffix ${{ steps.version.outputs.version-without-v }} --output ${{ env.build_runtime }} --sc false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
 
       # Create Release
       - name: "Create Release"
@@ -67,6 +66,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.build }}/${{ env.proj_runtime }}.exe
+          asset_path: ${{ env.build_runtime }}/${{ env.proj_runtime }}.exe
           asset_name: Runtime.exe
           asset_content_type: application/zip
