@@ -51,7 +51,7 @@ namespace BotwRegistryToolkit.Models
 
                         [https://github.com/ArchLeaders/BotwRegistryToolkit](https://github.com/ArchLeaders/BotwRegistryToolkit/releases/latest)
                         """, "Error", formatting: Formatting.Markdown);
-                    // Exit(1);
+                    Exit(1);
                 }
             }
         }
