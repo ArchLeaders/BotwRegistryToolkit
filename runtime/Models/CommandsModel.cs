@@ -95,7 +95,7 @@ namespace BotwRegistryToolkit.Runtime.Models
 
         public static Task ConvertJsonToBfev(string file, bool deleteSource)
         {
-            BfevFile bfev = BfevFile.FromJson(file);
+            BfevFile bfev = BfevFile.FromJson(File.ReadAllText(file));
             if (deleteSource == true) File.Delete(file);
             File.WriteAllBytes($"{Path.GetDirectoryName(file)}\\{Path.GetFileNameWithoutExtension(file)}", bfev.ToBinary());
 
