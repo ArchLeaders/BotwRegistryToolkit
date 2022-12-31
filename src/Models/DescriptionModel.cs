@@ -104,5 +104,10 @@ namespace BotwRegistryToolkit.Models
             Botw / Yaz0 / Decompress with Yaz0
             Decompresses a file compressed with the Yaz0 compression algorithm
             """;
+
+        public const string Yaz0Tools_CompressionLevel = """
+            Define the level at which to compress files
+            (The higher the value, the slower the compression)
+            """;
     }
 }

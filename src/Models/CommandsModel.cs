@@ -55,7 +55,7 @@
         // Yaz0 Tools
 
         public static CommandInfo Yaz0Compress => new(
-            "*", "Compress with Yaz0", "Yaz0", null
+            "*", "Compress with Yaz0", "Yaz0", null, ("compressionLevel", SettingsFactory["Yaz0CompressionLevel"]!)
         );
 
         public static CommandInfo Yaz0Decompress => new(

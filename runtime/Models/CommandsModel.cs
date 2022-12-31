@@ -181,7 +181,7 @@ namespace BotwRegistryToolkit.Runtime.Models
         public static Task Yaz0Decompress(string file)
         {
             string ext = Path.GetExtension(file);
-            return File.WriteAllBytesAsync($"{string.Join('.', file.Split('.')[..^1])}.{(ext.ToLower() != ".ssarc" ? ext.Replace(".s", ".") : ext)}", Yaz0.Decompress(file));
+            return File.WriteAllBytesAsync($"{string.Join('.', file.Split('.')[..^1])}{(ext.ToLower() != ".ssarc" ? ext.Replace(".s", ".") : ext)}", Yaz0.Decompress(file));
         }
     }
 }

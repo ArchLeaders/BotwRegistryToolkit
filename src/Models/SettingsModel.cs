@@ -28,32 +28,30 @@ namespace BotwRegistryToolkit.Models
             }
 
             // Collect runtime
-            if (!File.Exists($"{DataFolder}\\Runtime.exe")) {
-                if (File.Exists(".\\Runtime.exe")) {
-                    File.Copy(".\\Runtime.exe", $"{DataFolder}\\Runtime.exe");
+            if (File.Exists(".\\Runtime.exe")) {
+                File.Copy(".\\Runtime.exe", $"{DataFolder}\\Runtime.exe");
+            }
+            else {
+                try {
+                    using HttpClient client = new();
+                    client.DefaultRequestHeaders.Add("user-agent", $"{nameof(BotwRegistryToolkit).ToLower()}");
+
+                    string request = $"https://api.github.com/repos/ArchLeaders/{nameof(BotwRegistryToolkit)}/releases";
+                    List<Dictionary<string, JsonElement>> releases = JsonSerializer.Deserialize<List<Dictionary<string, JsonElement>>>(
+                        await client.GetStringAsync(request)) ?? throw new Exception($"Could not parse GitHub release info from '{request}'");
+
+                    string download = releases[0]["assets"][0].Deserialize<Dictionary<string, JsonElement>>()?["browser_download_url"].ToString()
+                        ?? throw new Exception($"Invalid download url from '{request}# [0] > assets > [0]'");
+
+                    File.WriteAllBytes($"{DataFolder}\\Runtime.exe", await client.GetByteArrayAsync(download));
                 }
-                else {
-                    try {
-                        using HttpClient client = new();
-                        client.DefaultRequestHeaders.Add("user-agent", $"{nameof(BotwRegistryToolkit).ToLower()}");
+                catch {
+                    await MessageBox.ShowDialog("""
+                        Failed to retrive the runtime from the server, please download it manually and place it next to the main executable.
 
-                        string request = $"https://api.github.com/repos/ArchLeaders/{nameof(BotwRegistryToolkit)}/releases";
-                        List<Dictionary<string, JsonElement>> releases = JsonSerializer.Deserialize<List<Dictionary<string, JsonElement>>>(
-                            await client.GetStringAsync(request)) ?? throw new Exception($"Could not parse GitHub release info from '{request}'");
-
-                        string download = releases[0]["assets"][0].Deserialize<Dictionary<string, JsonElement>>()?["browser_download_url"].ToString()
-                            ?? throw new Exception($"Invalid download url from '{request}# [0] > assets > [0]'");
-
-                        File.WriteAllBytes($"{DataFolder}\\Runtime.exe", await client.GetByteArrayAsync(download));
-                    }
-                    catch {
-                        await MessageBox.ShowDialog("""
-                            Failed to retrive the runtime from the server, please download it manually and place it next to the main executable.
-
-                            [https://github.com/ArchLeaders/BotwRegistryToolkit](https://github.com/ArchLeaders/BotwRegistryToolkit/releases/latest)
-                            """, "Error", formatting: Formatting.Markdown);
-                        Exit(1);
-                    }
+                        [https://github.com/ArchLeaders/BotwRegistryToolkit](https://github.com/ArchLeaders/BotwRegistryToolkit/releases/latest)
+                        """, "Error", formatting: Formatting.Markdown);
+                    // Exit(1);
                 }
             }
         }
@@ -137,6 +135,9 @@ namespace BotwRegistryToolkit.Models
 
         [Setting("Decompress With Yaz0", Yaz0Tools_Yaz0Decompress, Category = "Yaz0 Tools", Folder = "Registry Tools")]
         public bool Yaz0Decompress { get; set; } = true;
+
+        [Setting(UiType.Dropdown, "1", "2", "3", "4", "5", "6", "7", "8", "9", Name = "Compression Level", Description = Yaz0Tools_CompressionLevel, Category = "Yaz0 Tools", Folder = "Registry Tools")]
+        public string Yaz0CompressionLevel { get; set; } = "7";
 
         // 
         // App Settings
