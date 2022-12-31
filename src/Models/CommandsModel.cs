@@ -50,5 +50,16 @@
         public static CommandInfo RepackSarcNx => new(
             "Folder", "Repack Sarc NX", "Sarc", null, ("deleteSource", SettingsFactory["SarcDeleteSource"]!)
         );
+
+        //
+        // Yaz0 Tools
+
+        public static CommandInfo Yaz0Compress => new(
+            "*", "Compress with Yaz0", "Yaz0", null
+        );
+
+        public static CommandInfo Yaz0Decompress => new(
+            "*", "Decompress with Yaz0", "Yaz0", "s"
+        );
     }
 }

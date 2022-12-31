@@ -55,6 +55,9 @@ namespace BotwRegistryToolkit.Runtime.Models
                 ?? throw new NullReferenceException($"The specified command '{args[0]}' returned null");
         }
 
+        //
+        // Aamp Tools
+
         public static Task ConvertAampToYaml(string file, bool deleteSource)
         {
             AampFile aamp = new(file);
@@ -78,6 +81,9 @@ namespace BotwRegistryToolkit.Runtime.Models
             return Task.CompletedTask;
         }
 
+        // 
+        // Bfev Tools
+
         public static Task ConvertBfevToJson(string file, bool deleteSource, bool formatJson)
         {
             BfevFile bfev = BfevFile.FromBinary(file);
@@ -95,6 +101,9 @@ namespace BotwRegistryToolkit.Runtime.Models
 
             return Task.CompletedTask;
         }
+
+        //
+        // Byml Tools
 
         public static Task ConvertBymlToYaml(string file, bool deleteSource)
         {
@@ -118,6 +127,9 @@ namespace BotwRegistryToolkit.Runtime.Models
 
             return Task.CompletedTask;
         }
+
+        //
+        // Sarc Tools
 
         public static async Task ExtractSarc(string file, bool deleteSource)
         {
@@ -156,6 +168,20 @@ namespace BotwRegistryToolkit.Runtime.Models
             File.WriteAllBytes(deleteSource && Path.GetFileName(folder).Contains('.') ? folder : $"{folder}.sarc", data);
 
             return Task.CompletedTask;
+        }
+
+        //
+        // Yaz0 Tools
+
+        public static Task Yaz0Compress(string file, string compressionLevel)
+        {
+            return File.WriteAllBytesAsync($"{string.Join('.', file.Split('.')[..^1])}.s{Path.GetExtension(file).Remove(0, 1)}", Yaz0.Compress(file, int.Parse(compressionLevel)));
+        }
+
+        public static Task Yaz0Decompress(string file)
+        {
+            string ext = Path.GetExtension(file);
+            return File.WriteAllBytesAsync($"{string.Join('.', file.Split('.')[..^1])}.{(ext.ToLower() != ".ssarc" ? ext.Replace(".s", ".") : ext)}", Yaz0.Decompress(file));
         }
     }
 }

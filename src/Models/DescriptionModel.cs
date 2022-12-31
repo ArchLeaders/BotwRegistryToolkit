@@ -91,5 +91,18 @@ namespace BotwRegistryToolkit.Models
         public const string SarcTools_DeleteSource = """
             Deletes the source file or folder after extracting or repacking
             """;
+
+        //
+        // Yaz0 Tools
+
+        public const string Yaz0Tools_Yaz0Compress = """
+            Botw / Yaz0 / Compress with Yaz0
+            Compresses a file with the Yaz0 compression algorithm
+            """;
+
+        public const string Yaz0Tools_Yaz0Decompress = """
+            Botw / Yaz0 / Decompress with Yaz0
+            Decompresses a file compressed with the Yaz0 compression algorithm
+            """;
     }
 }

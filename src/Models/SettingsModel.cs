@@ -129,6 +129,15 @@ namespace BotwRegistryToolkit.Models
         [Setting("Delete Source", SarcTools_DeleteSource, Category = "Sarc Tools", Folder = "Registry Tools")]
         public bool SarcDeleteSource { get; set; } = false;
 
+        //
+        // Yaz0 Tools
+
+        [Setting("Compress With Yaz0", Yaz0Tools_Yaz0Compress, Category = "Yaz0 Tools", Folder = "Registry Tools")]
+        public bool Yaz0Compress { get; set; } = true;
+
+        [Setting("Decompress With Yaz0", Yaz0Tools_Yaz0Decompress, Category = "Yaz0 Tools", Folder = "Registry Tools")]
+        public bool Yaz0Decompress { get; set; } = true;
+
         // 
         // App Settings
 
