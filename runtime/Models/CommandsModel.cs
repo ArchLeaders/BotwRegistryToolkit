@@ -137,6 +137,22 @@ namespace BotwRegistryToolkit.Runtime.Models
                 data = Yaz0.Compress(data);
             }
 
+            sarc.Endian = Endian.Big;
+            File.WriteAllBytes(deleteSource && Path.GetFileName(folder).Contains('.') ? folder : $"{folder}.sarc", data);
+
+            return Task.CompletedTask;
+        }
+
+        public static Task RepackSarcNx(string folder, bool deleteSource)
+        {
+            SarcFile sarc = SarcFile.LoadFromDirectory(folder);
+            if (deleteSource == true) Directory.Delete(folder, true);
+
+            byte[] data = sarc.ToBinary();
+            if (Path.GetExtension(folder).StartsWith(".s")) {
+                data = Yaz0.Compress(data);
+            }
+
             File.WriteAllBytes(deleteSource && Path.GetFileName(folder).Contains('.') ? folder : $"{folder}.sarc", data);
 
             return Task.CompletedTask;

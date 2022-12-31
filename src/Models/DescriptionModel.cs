@@ -83,6 +83,11 @@ namespace BotwRegistryToolkit.Models
             Packs a folder into a SARC archive
             """;
 
+        public const string SarcTools_RepackSarcNx = """
+            Botw / Sarc / Repack Sarc
+            Packs a folder into a switch (little endian) SARC archive
+            """;
+
         public const string SarcTools_DeleteSource = """
             Deletes the source file or folder after extracting or repacking
             """;

@@ -46,5 +46,9 @@
         public static CommandInfo RepackSarc => new(
             "Folder", "Repack Sarc", "Sarc", null, ("deleteSource", SettingsFactory["SarcDeleteSource"]!)
         );
+
+        public static CommandInfo RepackSarcNx => new(
+            "Folder", "Repack Sarc NX", "Sarc", null, ("deleteSource", SettingsFactory["SarcDeleteSource"]!)
+        );
     }
 }

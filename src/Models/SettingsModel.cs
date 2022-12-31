@@ -123,6 +123,9 @@ namespace BotwRegistryToolkit.Models
         [Setting("Repack Sarc", SarcTools_RepackSarc, Category = "Sarc Tools", Folder = "Registry Tools")]
         public bool RepackSarc { get; set; } = true;
 
+        [Setting("Repack Sarc NX", SarcTools_RepackSarcNx, Category = "Sarc Tools", Folder = "Registry Tools")]
+        public bool RepackSarcNx { get; set; } = true;
+
         [Setting("Delete Source", SarcTools_DeleteSource, Category = "Sarc Tools", Folder = "Registry Tools")]
         public bool SarcDeleteSource { get; set; } = false;
 
