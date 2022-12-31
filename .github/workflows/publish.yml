@@ -12,16 +12,15 @@ jobs:
 
     env:
       proj_desktop: "BotwRegistryToolkit"
-      build: "${{ github.workspace }}/build_desktop"
       proj_runtime: "BotwRegistryToolkit.Runtime"
-      build_runtime: "${{ github.workspace }}/build"
+      build: "${{ github.workspace }}/build"
 
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install DotNET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: "7.0.x"
 
@@ -35,37 +34,18 @@ jobs:
 
       # Windows (Runtime)
       - name: Publish BotwRegistryToolkit.Runtime
-        run: dotnet publish runtime/${{ env.proj_runtime }}.csproj -r win-x64 --configuration Release --version-suffix ${{ steps.version.outputs.version-without-v }} --output ${{ env.build_runtime }} --sc false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+        run: dotnet publish runtime/${{ env.proj_runtime }}.csproj -r win-x64 --configuration Release --version-suffix ${{ steps.version.outputs.version-without-v }} --output ${{ env.build }} --sc false -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
 
       # Create Release
       - name: "Create Release"
         id: create_release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v0.1.15
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
           tag_name: ${{ steps.version.outputs.version }}
           release_name: BotwRegistryToolkit - ${{ steps.version.outputs.version }}
           prerelease: ${{ contains(steps.version.outputs.version, 'alpha') || contains(steps.version.outputs.version, 'beta') }}
-
-      # Windows
-      - name: "Upload release asset"
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.build }}/${{ env.proj_desktop }}.exe
-          asset_name: ${{ env.proj_desktop }}-${{ steps.version.outputs.version }}.exe
-          asset_content_type: application/zip
-
-      # Windows (Runtime)
-      - name: "Upload release asset"
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.build_runtime }}/${{ env.proj_runtime }}.exe
-          asset_name: Runtime.exe
-          asset_content_type: application/zip
+          files: |
+            ${{ env.build }}/{{ env.proj_desktop }}.exe
+            ${{ env.build }}/{{ env.proj_runtime }}.exe
