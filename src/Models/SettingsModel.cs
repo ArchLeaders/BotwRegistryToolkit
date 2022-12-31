@@ -29,7 +29,7 @@ namespace BotwRegistryToolkit.Models
 
             // Collect runtime
             if (File.Exists(".\\Runtime.exe")) {
-                File.Copy(".\\Runtime.exe", $"{DataFolder}\\Runtime.exe");
+                File.Move(".\\Runtime.exe", $"{DataFolder}\\Runtime.exe", true);
             }
             else {
                 try {
