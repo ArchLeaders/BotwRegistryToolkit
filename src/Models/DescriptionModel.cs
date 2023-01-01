@@ -92,6 +92,11 @@ namespace BotwRegistryToolkit.Models
             Deletes the source file or folder after extracting or repacking
             """;
 
+        public const string SarcTools_ReferenceFile = """
+            Looks for a file with the same name as the source folder and overwrites that file using it's extension
+            This does not work with 'Delete Source' enabled
+            """;
+
         //
         // Yaz0 Tools
 

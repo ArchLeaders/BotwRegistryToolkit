@@ -127,6 +127,9 @@ namespace BotwRegistryToolkit.Models
         [Setting("Delete Source", SarcTools_DeleteSource, Category = "Sarc Tools", Folder = "Registry Tools")]
         public bool SarcDeleteSource { get; set; } = false;
 
+        [Setting("Reference File", SarcTools_ReferenceFile, Category = "Sarc Tools", Folder = "Registry Tools")]
+        public bool SarcReferenceFile { get; set; } = false;
+
         //
         // Yaz0 Tools
 

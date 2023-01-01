@@ -40,15 +40,15 @@
         // Sarc
 
         public static CommandInfo ExtractSarc => new (
-            "*", "Extract Sarc", "Sarc", null, ("deleteSource", SettingsFactory["SarcDeleteSource"]!)
+            "*", "Extract Sarc", "Sarc", null, ("deleteSource", SettingsFactory["SarcDeleteSource"]!), ("referenceFile", SettingsFactory["SarcReferenceFile"]!)
         );
 
         public static CommandInfo RepackSarc => new(
-            "Folder", "Repack Sarc", "Sarc", null, ("deleteSource", SettingsFactory["SarcDeleteSource"]!)
+            "Folder", "Repack Sarc", "Sarc", null, ("deleteSource", SettingsFactory["SarcDeleteSource"]!), ("referenceFile", SettingsFactory["SarcReferenceFile"]!)
         );
 
         public static CommandInfo RepackSarcNx => new(
-            "Folder", "Repack Sarc NX", "Sarc", null, ("deleteSource", SettingsFactory["SarcDeleteSource"]!)
+            "Folder", "Repack Sarc NX", "Sarc", null, ("deleteSource", SettingsFactory["SarcDeleteSource"]!), ("referenceFile", SettingsFactory["SarcReferenceFile"]!)
         );
 
         //
