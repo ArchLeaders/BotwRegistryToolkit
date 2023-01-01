@@ -62,9 +62,7 @@ namespace BotwRegistryToolkit.Runtime.Models
         {
             AampFile aamp = new(file);
             if (deleteSource == true) File.Delete(file);
-            File.WriteAllText($"{file}.yml", aamp.ToYml());
-
-            return Task.CompletedTask;
+            return File.WriteAllTextAsync($"{file}.yml", aamp.ToYml());
         }
 
         public static Task ConvertYamlToAamp(string file, bool deleteSource)
@@ -88,18 +86,14 @@ namespace BotwRegistryToolkit.Runtime.Models
         {
             BfevFile bfev = BfevFile.FromBinary(file);
             if (deleteSource == true) File.Delete(file);
-            File.WriteAllText($"{file}.json", bfev.ToJson(formatJson));
-
-            return Task.CompletedTask;
+            return File.WriteAllTextAsync($"{file}.json", bfev.ToJson(formatJson));
         }
 
         public static Task ConvertJsonToBfev(string file, bool deleteSource)
         {
             BfevFile bfev = BfevFile.FromJson(File.ReadAllText(file));
             if (deleteSource == true) File.Delete(file);
-            File.WriteAllBytes($"{Path.GetDirectoryName(file)}\\{Path.GetFileNameWithoutExtension(file)}", bfev.ToBinary());
-
-            return Task.CompletedTask;
+            return File.WriteAllBytesAsync($"{Path.GetDirectoryName(file)}\\{Path.GetFileNameWithoutExtension(file)}", bfev.ToBinary());
         }
 
         //
@@ -109,9 +103,7 @@ namespace BotwRegistryToolkit.Runtime.Models
         {
             BymlFile byml = BymlFile.FromBinary(file);
             if (deleteSource == true) File.Delete(file);
-            File.WriteAllText($"{file}.yml", byml.ToYaml());
-
-            return Task.CompletedTask;
+            return File.WriteAllTextAsync($"{file}.yml", byml.ToYaml());
         }
 
         public static Task ConvertYamlToByml(string file, bool deleteSource)
@@ -139,35 +131,33 @@ namespace BotwRegistryToolkit.Runtime.Models
             await sarc.ExtractToDirectory(deleteSource ? file : string.Join('.', file.Split('.')[..^1]));
         }
 
-        public static Task RepackSarc(string folder, bool deleteSource)
+
+        public static Task RepackSarc(string folder, bool deleteSource, bool referenceFile) => RepackSarcHelper(folder, deleteSource, referenceFile, Endian.Big);
+        public static Task RepackSarcNx(string folder, bool deleteSource, bool referenceFile) => RepackSarcHelper(folder, deleteSource, referenceFile, Endian.Little);
+        public static Task RepackSarcHelper(string folder, bool deleteSource, bool referenceFile, Endian endian)
         {
             SarcFile sarc = SarcFile.LoadFromDirectory(folder);
-            if (deleteSource == true) Directory.Delete(folder, true);
+            sarc.Endian = endian;
+
+            if (deleteSource == true) {
+                Directory.Delete(folder, true);
+            }
+
+            string path = deleteSource && Path.GetFileName(folder).Contains('.') ? folder : $"{folder}.sarc";
+            if (referenceFile == true) {
+                IEnumerable<string> matches = Directory.GetFiles(Path.GetDirectoryName(folder) ?? "").Where(x => Path.GetFileNameWithoutExtension(x) == Path.GetFileNameWithoutExtension(folder));
+                if (matches.Any()) {
+                    path = matches.First();
+                    File.Delete(path);
+                }
+            }
 
             byte[] data = sarc.ToBinary();
-            if (Path.GetExtension(folder).StartsWith(".s")) {
+            if (Path.GetExtension(path).StartsWith(".s")) {
                 data = Yaz0.Compress(data);
             }
 
-            sarc.Endian = Endian.Big;
-            File.WriteAllBytes(deleteSource && Path.GetFileName(folder).Contains('.') ? folder : $"{folder}.sarc", data);
-
-            return Task.CompletedTask;
-        }
-
-        public static Task RepackSarcNx(string folder, bool deleteSource)
-        {
-            SarcFile sarc = SarcFile.LoadFromDirectory(folder);
-            if (deleteSource == true) Directory.Delete(folder, true);
-
-            byte[] data = sarc.ToBinary();
-            if (Path.GetExtension(folder).StartsWith(".s")) {
-                data = Yaz0.Compress(data);
-            }
-
-            File.WriteAllBytes(deleteSource && Path.GetFileName(folder).Contains('.') ? folder : $"{folder}.sarc", data);
-
-            return Task.CompletedTask;
+            return File.WriteAllBytesAsync(path, data);
         }
 
         //
