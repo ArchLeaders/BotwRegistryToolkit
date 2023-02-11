@@ -1,4 +1,4 @@
-﻿using Nintendo.Yaz0;
+﻿using Yaz0Library;
 
 namespace BotwRegistryToolkit.Runtime
 {
@@ -8,7 +8,7 @@ namespace BotwRegistryToolkit.Runtime
         {
             data = File.ReadAllBytes(file);
             if (data.AsSpan()[0..4].SequenceEqual("Yaz0"u8)) {
-                data = Yaz0.Decompress(data);
+                data = Yaz0.Decompress(data).ToArray();
                 return true;
             }
 

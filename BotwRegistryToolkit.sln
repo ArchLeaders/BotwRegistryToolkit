@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwRegistryToolkit", "src\BotwRegistryToolkit.csproj", "{7AB33C6F-7DB4-47FA-9A0C-ECF685A9F31F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BotwRegistryToolkit.Runtime", "runtime\BotwRegistryToolkit.Runtime.csproj", "{D1B35009-AAAF-4E2B-A814-95D82CA58C67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotwRegistryToolkit.Runtime", "runtime\BotwRegistryToolkit.Runtime.csproj", "{D1B35009-AAAF-4E2B-A814-95D82CA58C67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

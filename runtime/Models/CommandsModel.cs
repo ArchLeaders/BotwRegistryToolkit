@@ -1,10 +1,10 @@
 ﻿using BfevLibrary;
 using Nintendo.Aamp;
 using Nintendo.Byml;
-using Nintendo.Yaz0;
 using SarcLibrary;
 using SharpYaml;
 using System.Reflection;
+using Yaz0Library;
 
 namespace BotwRegistryToolkit.Runtime.Models
 {
@@ -154,7 +154,7 @@ namespace BotwRegistryToolkit.Runtime.Models
 
             byte[] data = sarc.ToBinary();
             if (Path.GetExtension(path).StartsWith(".s")) {
-                data = Yaz0.Compress(data);
+                data = Yaz0.Compress(data, out Yaz0SafeHandle _).ToArray();
             }
 
             return File.WriteAllBytesAsync(path, data);
@@ -165,13 +165,13 @@ namespace BotwRegistryToolkit.Runtime.Models
 
         public static Task Yaz0Compress(string file, string compressionLevel)
         {
-            return File.WriteAllBytesAsync($"{string.Join('.', file.Split('.')[..^1])}.s{Path.GetExtension(file).Remove(0, 1)}", Yaz0.Compress(file, int.Parse(compressionLevel)));
+            return File.WriteAllBytesAsync($"{string.Join('.', file.Split('.')[..^1])}.s{Path.GetExtension(file).Remove(0, 1)}", Yaz0.Compress(file, out Yaz0SafeHandle _, int.Parse(compressionLevel)).ToArray());
         }
 
         public static Task Yaz0Decompress(string file)
         {
             string ext = Path.GetExtension(file);
-            return File.WriteAllBytesAsync($"{string.Join('.', file.Split('.')[..^1])}{(ext.ToLower() != ".ssarc" ? ext.Replace(".s", ".") : ext)}", Yaz0.Decompress(file));
+            return File.WriteAllBytesAsync($"{string.Join('.', file.Split('.')[..^1])}{(ext.ToLower() != ".ssarc" ? ext.Replace(".s", ".") : ext)}", Yaz0.Decompress(file).ToArray());
         }
     }
 }
