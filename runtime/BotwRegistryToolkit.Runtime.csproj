@@ -22,7 +22,7 @@
 	
   <ItemGroup>
     <PackageReference Include="AampLibrary" Version="1.0.10" />
-    <PackageReference Include="BfevLibrary" Version="0.10.5" />
+    <PackageReference Include="BfevLibrary" Version="0.11.0" />
     <PackageReference Include="BymlLibrary" Version="1.1.4" />
     <PackageReference Include="SarcLibrary" Version="2.0.2" />
     <PackageReference Include="System.Windows.Extensions" Version="7.0.0" />
