@@ -25,7 +25,7 @@
     <PackageReference Include="BfevLibrary" Version="0.11.0" />
     <PackageReference Include="BymlLibrary" Version="1.1.4" />
     <PackageReference Include="SarcLibrary" Version="2.0.2" />
-    <PackageReference Include="System.Windows.Extensions" Version="7.0.0" />
+    <PackageReference Include="System.Windows.Extensions" Version="8.0.0-preview.4.23259.5" />
     <PackageReference Include="Yaz0Library" Version="1.1.4" />
   </ItemGroup>
 
